@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class Application {
 
     public static void main(String[] args) {
-    	System.out.println("Test... this is lola branch");
+    	System.out.println("Test... this is lola branch mmmmmm");
         SpringApplication.run(Application.class, args);
     }
 }
