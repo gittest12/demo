@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class Application {
 
     public static void main(String[] args) {
-    	System.out.println("Test... this is lola branch try merging zzzzzzzzzzzzzzz");
+    	System.out.println("Test... this is lola branch try merging yyyyyy");
         SpringApplication.run(Application.class, args);
     }
 }
