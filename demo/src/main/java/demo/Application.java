@@ -30,12 +30,15 @@ public class Application {
 
 		Application dcdm = new Application();
 
-		long id = dcdm.addSwitchTemplate(1,2,11,12,13,14,"here",24);
-		System.out.println("added id = "+id);
-		id = dcdm.addSwitchTemplate(11,12,111,112,113,114,"here1",34);
-		System.out.println("added id = "+id);    
-		dcdm.deleteSwitchTemplate(id);
-		System.out.println("deleted id = "+id);    
+		long id1 = dcdm.addSwitchTemplate(1,2,11,12,13,14,"here",24);
+		System.out.println("added id = "+id1);
+		long id2 = dcdm.addSwitchTemplate(11,12,111,112,113,114,"here1",34);
+		System.out.println("added id = "+id2);    
+		dcdm.deleteSwitchTemplate(id2);
+		System.out.println("deleted id = "+id2);  
+		dcdm.updateSwitchDimentions(id1, 500, 600, 700);
+		System.out.println("updated id = "+id1);  
+		HibernateUtil.closeSessionFactory();
 	}
 	
 	
@@ -70,6 +73,27 @@ public class Application {
 			SwitchTemplate switchTemplate = 
 					(SwitchTemplate)session.get(SwitchTemplate.class, switchTemplateID); 
 			session.delete(switchTemplate); 
+			tx.commit();
+		}catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		}finally {
+			session.close(); 
+		}
+	}  
+
+	/* Method to DELETE an switchTemplate from the records */
+	public void updateSwitchDimentions(long switchTemplateID, float height, float width, float depth){
+		Session session = sessionFactory.openSession();
+		Transaction tx = null;
+		try{
+			tx = session.beginTransaction();
+			SwitchTemplate switchTemplate = 
+					(SwitchTemplate)session.get(SwitchTemplate.class, switchTemplateID);
+			switchTemplate.setHeight(height);
+			switchTemplate.setDepth(depth);
+			switchTemplate.setWidth(width);
+			session.update(switchTemplate); 
 			tx.commit();
 		}catch (HibernateException e) {
 			if (tx!=null) tx.rollback();

@@ -12,8 +12,8 @@ public class SwitchTemplate {
 	int switchType;
 	@Column(name = "switch_name")
 	int switchName;
-	@Column(name = "hight")
-	int hight; 	// U
+	@Column(name = "height")
+	float height; 	// U
 	@Column(name = "width")
 	float width;	// inch
 	@Column(name = "depth")
@@ -29,13 +29,13 @@ public class SwitchTemplate {
 
 	}
 
-	public SwitchTemplate(int switchType, int switchName, int hight,
+	public SwitchTemplate(int switchType, int switchName, float height,
 			float width, float depth, float energy, String location,
 			int numberOfPorts) {
 		super();
 		this.switchType = switchType;
 		this.switchName = switchName;
-		this.hight = hight;
+		this.height = height;
 		this.width = width;
 		this.depth = depth;
 		this.energy = energy;
@@ -80,15 +80,15 @@ public class SwitchTemplate {
 		this.id = id;
 	}
 
-	public int getHight() {
-		return hight;
+	public float getHeight() {
+		return height;
 	}
 
 
 
 
-	public void setHight(int hight) {
-		this.hight = hight;
+	public void setHeight(float height) {
+		this.height = height;
 	}
 
 
