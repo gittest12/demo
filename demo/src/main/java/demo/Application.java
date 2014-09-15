@@ -21,7 +21,9 @@ public class Application {
     private static ServiceRegistry serviceRegistry;
     
     public static void main(String[] args) {
+
     	System.out.println("Test....");
+
         SpringApplication.run(Application.class, args);
         
 
