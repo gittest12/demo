@@ -17,10 +17,10 @@
 <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
 <property name="current_session_context_class">thread</property>
 <property name="hibernate.show_sql">true</property>
-<property name="hibernate.hbm2dll.auto">update</property>
+<property name="hibernate.hbm2dll.auto">create</property>
 
 <!-- List of XML mapping files -->
-   <mapping resource="SwitchTemplate.hbm.xml"/>
+   <mapping class="DCDM.SwitchTemplate"/>
 </session-factory>
 
 </hibernate-configuration>

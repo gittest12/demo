@@ -1,16 +1,30 @@
 package DCDM;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "SWITCH_TEMPLATE")
 public class SwitchTemplate {
+	@Id @GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "id")
+	long id;	
+	@Column(name = "switch_type")
 	int switchType;
+	@Column(name = "switch_name")
 	int switchName;
-	long id;
+	@Column(name = "hight")
 	int hight; 	// U
+	@Column(name = "width")
 	float width;	// inch
+	@Column(name = "depth")
 	float depth;	// inch
+	@Column(name = "energy")
 	float energy;
+	@Column(name = "location")
 	String location;
+	@Column(name = "Number_of_ports")
 	int NumberOfPorts;
-	
+
 	public SwitchTemplate() {
 
 	}
@@ -146,16 +160,16 @@ public class SwitchTemplate {
 	public void setNumberOfPorts(int numberOfPorts) {
 		NumberOfPorts = numberOfPorts;
 	}
-	
-//	•	Switch Type:  (e.g., SAN or Data)
-//	•	Switch Name: (e.g., Brocade 8000)0
-//	•	Switch ID Number:
-//	•	Dimensions of Switch:
-//	o	Height of Switch (in U’s)
-//	o	Width of Switch (in Inches)
-//	o	Depth of Switch (in Inches)
-//	•	Switch Energy requirements:
-//	•	Switch Location:
-//	•	Number of Ports (total):
+
+	//	•	Switch Type:  (e.g., SAN or Data)
+	//	•	Switch Name: (e.g., Brocade 8000)0
+	//	•	Switch ID Number:
+	//	•	Dimensions of Switch:
+	//	o	Height of Switch (in U’s)
+	//	o	Width of Switch (in Inches)
+	//	o	Depth of Switch (in Inches)
+	//	•	Switch Energy requirements:
+	//	•	Switch Location:
+	//	•	Number of Ports (total):
 
 }

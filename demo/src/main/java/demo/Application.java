@@ -4,7 +4,6 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.service.ServiceRegistry;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -19,7 +18,6 @@ import DCDM.SwitchTemplate;
 @EnableAutoConfiguration
 public class Application {
     private static SessionFactory sessionFactory;
-    private static ServiceRegistry serviceRegistry;
     
     public static void main(String[] args) {
 
