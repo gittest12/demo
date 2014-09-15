@@ -17,45 +17,66 @@ import DCDM.SwitchTemplate;
 @ComponentScan
 @EnableAutoConfiguration
 public class Application {
-    private static SessionFactory sessionFactory;
-    
-    public static void main(String[] args) {
+	private static SessionFactory sessionFactory;
 
-    	System.out.println("Test....");
+	public static void main(String[] args) {
 
-        SpringApplication.run(Application.class, args);
-        
+		System.out.println("Test....");
 
-        sessionFactory = HibernateUtil.getSessionFactory();
-        
-        Application dcdm = new Application();
-        
-        long id = dcdm.addSwitchTemplate(1,2,11,12,13,14,"here",24);
-        System.out.println("id = "+id);
-        id = dcdm.addSwitchTemplate(11,12,111,112,113,114,"here1",34);
-        System.out.println("id = "+id);        
-    }
-    /* Method to CREATE a switch in the database */
-    public long addSwitchTemplate(int switchType, int switchName, int hight,
+		SpringApplication.run(Application.class, args);
+
+
+		sessionFactory = HibernateUtil.getSessionFactory();
+
+		Application dcdm = new Application();
+
+		long id = dcdm.addSwitchTemplate(1,2,11,12,13,14,"here",24);
+		System.out.println("added id = "+id);
+		id = dcdm.addSwitchTemplate(11,12,111,112,113,114,"here1",34);
+		System.out.println("added id = "+id);    
+		dcdm.deleteSwitchTemplate(id);
+		System.out.println("deleted id = "+id);    
+	}
+	
+	
+	/* Method to CREATE a switch in the database */
+	public long addSwitchTemplate(int switchType, int switchName, int hight,
 			float width, float depth, float energy, String location,
 			int numberOfPorts){
-       Session session = sessionFactory.openSession();
-       Transaction tx = null;
-       Long switchID = null;
-       try{
-          tx = session.beginTransaction();
-          SwitchTemplate switchTemplate = new SwitchTemplate(switchType, switchName, hight,
-      			width, depth, energy, location, numberOfPorts);
-          switchID = (Long) session.save(switchTemplate); 
-          tx.commit();
-       }catch (HibernateException e) {
-          if (tx!=null) tx.rollback();
-          e.printStackTrace(); 
-       }finally {
-          session.close(); 
-       }
-       return switchID;
-    }
-    
+		Session session = sessionFactory.openSession();
+		Transaction tx = null;
+		Long switchID = null;
+		try{
+			tx = session.beginTransaction();
+			SwitchTemplate switchTemplate = new SwitchTemplate(switchType, switchName, hight,
+					width, depth, energy, location, numberOfPorts);
+			switchID = (Long) session.save(switchTemplate); 
+			tx.commit();
+		}catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		}finally {
+			session.close(); 
+		}
+		return switchID;
+	}
+
+	/* Method to DELETE an switchTemplate from the records */
+	public void deleteSwitchTemplate(Long switchTemplateID){
+		Session session = sessionFactory.openSession();
+		Transaction tx = null;
+		try{
+			tx = session.beginTransaction();
+			SwitchTemplate switchTemplate = 
+					(SwitchTemplate)session.get(SwitchTemplate.class, switchTemplateID); 
+			session.delete(switchTemplate); 
+			tx.commit();
+		}catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		}finally {
+			session.close(); 
+		}
+	}  
 
 }

@@ -17,9 +17,9 @@
 <property name="transaction.factory_class">org.hibernate.transaction.JDBCTransactionFactory</property>
 <property name="current_session_context_class">thread</property>
 <property name="hibernate.show_sql">true</property>
-<property name="hibernate.hbm2dll.auto">create</property>
+<property name="hibernate.hbm2ddl.auto">update</property>
 
-<!-- List of XML mapping files -->
+<!-- List of persistent classes -->
    <mapping class="DCDM.SwitchTemplate"/>
 </session-factory>
 
