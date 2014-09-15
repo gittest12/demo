@@ -11,6 +11,7 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import DCDM.HibernateUtil;
 import DCDM.SwitchTemplate;
 
 @Configuration
@@ -27,28 +28,27 @@ public class Application {
         SpringApplication.run(Application.class, args);
         
 
-        sessionFactory = createSessionFactory();
+        sessionFactory = HibernateUtil.getSessionFactory();
         
         Application dcdm = new Application();
         
-        dcdm.addSwitchTemplate(1,2,1000,11,12,13,14,"here",24);
-        dcdm.addSwitchTemplate(11,12,1001,111,112,113,114,"here1",34);
-   
-        
-        
+        long id = dcdm.addSwitchTemplate(1,2,11,12,13,14,"here",24);
+        System.out.println("id = "+id);
+        id = dcdm.addSwitchTemplate(11,12,111,112,113,114,"here1",34);
+        System.out.println("id = "+id);        
     }
     /* Method to CREATE a switch in the database */
-    public Integer addSwitchTemplate(int switchType, int switchName, int id, int hight,
+    public long addSwitchTemplate(int switchType, int switchName, int hight,
 			float width, float depth, float energy, String location,
 			int numberOfPorts){
        Session session = sessionFactory.openSession();
        Transaction tx = null;
-       Integer switchID = null;
+       Long switchID = null;
        try{
           tx = session.beginTransaction();
-          SwitchTemplate switchTemplate = new SwitchTemplate(switchType, switchName, id, hight,
+          SwitchTemplate switchTemplate = new SwitchTemplate(switchType, switchName, hight,
       			width, depth, energy, location, numberOfPorts);
-          switchID = (Integer) session.save(switchTemplate); 
+          switchID = (Long) session.save(switchTemplate); 
           tx.commit();
        }catch (HibernateException e) {
           if (tx!=null) tx.rollback();
@@ -59,13 +59,5 @@ public class Application {
        return switchID;
     }
     
-    public static SessionFactory createSessionFactory() {
-    	org.hibernate.cfg.Configuration configuration = new org.hibernate.cfg.Configuration();
-        configuration.configure();
-        serviceRegistry = new StandardServiceRegistryBuilder().applySettings(
-                configuration.getProperties()).build();        
-        sessionFactory = configuration.buildSessionFactory(serviceRegistry);
-        return sessionFactory;
-    }
 
 }

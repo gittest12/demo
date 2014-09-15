@@ -3,7 +3,7 @@ package DCDM;
 public class SwitchTemplate {
 	int switchType;
 	int switchName;
-	int id = 0;
+	long id;
 	int hight; 	// U
 	float width;	// inch
 	float depth;	// inch
@@ -15,13 +15,12 @@ public class SwitchTemplate {
 
 	}
 
-	public SwitchTemplate(int switchType, int switchName, int id, int hight,
+	public SwitchTemplate(int switchType, int switchName, int hight,
 			float width, float depth, float energy, String location,
 			int numberOfPorts) {
 		super();
 		this.switchType = switchType;
 		this.switchName = switchName;
-		this.id = id;
 		this.hight = hight;
 		this.width = width;
 		this.depth = depth;
@@ -59,21 +58,13 @@ public class SwitchTemplate {
 	}
 
 
-
-
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 
-
-
-
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-
-
-
 
 	public int getHight() {
 		return hight;
