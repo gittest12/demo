@@ -4,13 +4,13 @@ import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.service.ServiceRegistry;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import DCDM.HibernateUtil;
+import DCDM.SwitchPort;
 import DCDM.SwitchTemplate;
 
 @Configuration
@@ -30,10 +30,27 @@ public class Application {
 
 		Application dcdm = new Application();
 
-		long id1 = dcdm.addSwitchTemplate(1,2,11,12,13,14,"here",24);
-		System.out.println("added id = "+id1);
-		long id2 = dcdm.addSwitchTemplate(11,12,111,112,113,114,"here1",34);
-		System.out.println("added id = "+id2);    
+		SwitchPort port1 = new SwitchPort("LC",21);
+		SwitchPort port2 = new SwitchPort("Copper",25);
+
+		SwitchTemplate switchTemplate = new SwitchTemplate(1,2,11,12,13,14,"here",14,"unknown");
+		long id1 = dcdm.addSwitchTemplate(switchTemplate);
+		dcdm.addPortToSwitchTemplate(port1, switchTemplate);
+		dcdm.addPortToSwitchTemplate(port2, switchTemplate);
+		switchTemplate.printSwitch();
+
+		switchTemplate = new SwitchTemplate(21,22,211,212,213,214,"here",24,"unknown");
+		long id2 = dcdm.addSwitchTemplate(switchTemplate);
+		dcdm.addPortToSwitchTemplate(port1, switchTemplate);
+		dcdm.addPortToSwitchTemplate(port2, switchTemplate);
+		switchTemplate.printSwitch();
+		
+		switchTemplate = new SwitchTemplate(311,312,311,312,313,314,"here1",34,"unknown");
+		long id3 = dcdm.addSwitchTemplate(switchTemplate);
+		dcdm.addPortToSwitchTemplate(port1, switchTemplate);
+		dcdm.addPortToSwitchTemplate(port2, switchTemplate);
+		switchTemplate.printSwitch();
+
 		dcdm.deleteSwitchTemplate(id2);
 		System.out.println("deleted id = "+id2);  
 		dcdm.updateSwitchDimentions(id1, 500, 600, 700);
@@ -43,16 +60,12 @@ public class Application {
 	
 	
 	/* Method to CREATE a switch in the database */
-	public long addSwitchTemplate(int switchType, int switchName, int hight,
-			float width, float depth, float energy, String location,
-			int numberOfPorts){
+	public long addSwitchTemplate(SwitchTemplate switchTemplate){
 		Session session = sessionFactory.openSession();
 		Transaction tx = null;
 		Long switchID = null;
 		try{
 			tx = session.beginTransaction();
-			SwitchTemplate switchTemplate = new SwitchTemplate(switchType, switchName, hight,
-					width, depth, energy, location, numberOfPorts);
 			switchID = (Long) session.save(switchTemplate); 
 			tx.commit();
 		}catch (HibernateException e) {
@@ -63,6 +76,25 @@ public class Application {
 		}
 		return switchID;
 	}
+	/* Method to DELETE an switchTemplate from the records */
+	public void addPortToSwitchTemplate(SwitchPort port, SwitchTemplate switchTemplate){
+		Session session = sessionFactory.openSession();
+		Transaction tx = null;
+		try{
+			tx = session.beginTransaction();
+			
+			port.setSwitchTemplate(switchTemplate);
+			session.save(port); 
+			
+			tx.commit();
+		}catch (HibernateException e) {
+			if (tx!=null) tx.rollback();
+			e.printStackTrace(); 
+		}finally {
+			session.close(); 
+		}
+	}  
+
 
 	/* Method to DELETE an switchTemplate from the records */
 	public void deleteSwitchTemplate(Long switchTemplateID){
@@ -72,6 +104,7 @@ public class Application {
 			tx = session.beginTransaction();
 			SwitchTemplate switchTemplate = 
 					(SwitchTemplate)session.get(SwitchTemplate.class, switchTemplateID); 
+			switchTemplate.getPorts().clear();
 			session.delete(switchTemplate); 
 			tx.commit();
 		}catch (HibernateException e) {

@@ -1,12 +1,24 @@
 package DCDM;
 
-import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+
 
 @Entity
 @Table(name = "SWITCH_TEMPLATE")
 public class SwitchTemplate {
 	@Id @GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "id")
+	@Column(name = "switch_id")
 	long id;	
 	@Column(name = "switch_type")
 	int switchType;
@@ -22,16 +34,29 @@ public class SwitchTemplate {
 	float energy;
 	@Column(name = "location")
 	String location;
-	@Column(name = "Number_of_ports")
-	int NumberOfPorts;
+	@Column(name = "number_of_ports")
+	int numberOfPorts;
+	@Column(name = "port_naming_convention")
+	String portNamingConvention;
+	
+    @OneToMany(fetch = FetchType.LAZY, mappedBy="switchTemplate",orphanRemoval=true)
+    private Set<SwitchPort> ports = new HashSet<SwitchPort>();
+
+	
+	// setting def value if adding a new column to existing table
+//	@Column(name = "port_naming", nullable = false, columnDefinition = "varchar(255) default 'xxxzzzunknown'")
+//	String PortNaming;
 
 	public SwitchTemplate() {
 
 	}
 
+
+
+
 	public SwitchTemplate(int switchType, int switchName, float height,
 			float width, float depth, float energy, String location,
-			int numberOfPorts) {
+			int numberOfPorts, String portNamingConvention) {
 		super();
 		this.switchType = switchType;
 		this.switchName = switchName;
@@ -40,10 +65,36 @@ public class SwitchTemplate {
 		this.depth = depth;
 		this.energy = energy;
 		this.location = location;
-		NumberOfPorts = numberOfPorts;
+		this.numberOfPorts = numberOfPorts;
+		this.portNamingConvention = portNamingConvention;
+	}
+
+	public void printSwitch(){
+		System.out.println("id = "+id+"switchType = "+switchType+ " switchName = "+switchName+ " height = "+height+
+				" width = "+width+" depth = "+depth+" energy = "+energy+" location = "+location+
+				" numberOfPorts = "+numberOfPorts+" portNamingConvention = "+portNamingConvention);
+	}
+	public String getPortNamingConvention() {
+		return portNamingConvention;
+	}
+
+	public Set<SwitchPort> getPorts() {
+		return ports;
 	}
 
 
+
+
+	public void setPorts(Set<SwitchPort> ports) {
+		this.ports = ports;
+	}
+
+
+
+
+	public void setPortNamingConvention(String portNamingConvention) {
+		this.portNamingConvention = portNamingConvention;
+	}
 
 
 	public int getSwitchType() {
@@ -151,25 +202,15 @@ public class SwitchTemplate {
 
 
 	public int getNumberOfPorts() {
-		return NumberOfPorts;
+		return numberOfPorts;
 	}
 
 
 
 
 	public void setNumberOfPorts(int numberOfPorts) {
-		NumberOfPorts = numberOfPorts;
+		this.numberOfPorts = numberOfPorts;
 	}
 
-	//	•	Switch Type:  (e.g., SAN or Data)
-	//	•	Switch Name: (e.g., Brocade 8000)0
-	//	•	Switch ID Number:
-	//	•	Dimensions of Switch:
-	//	o	Height of Switch (in U’s)
-	//	o	Width of Switch (in Inches)
-	//	o	Depth of Switch (in Inches)
-	//	•	Switch Energy requirements:
-	//	•	Switch Location:
-	//	•	Number of Ports (total):
 
 }

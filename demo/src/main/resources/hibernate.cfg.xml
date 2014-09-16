@@ -21,6 +21,7 @@
 
 <!-- List of persistent classes -->
    <mapping class="DCDM.SwitchTemplate"/>
+   <mapping class="DCDM.SwitchPort"/>
 </session-factory>
 
 </hibernate-configuration>
