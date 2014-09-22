@@ -15,6 +15,7 @@ public class DCDMtest {
 		try{
 			sessionFactory = HibernateUtil.getSessionFactory();
 
+			// test one to many (switch to ports)
 			SwitchPort port1 = new SwitchPort("LC",21);
 			SwitchPort port2 = new SwitchPort("Copper",25);
 
