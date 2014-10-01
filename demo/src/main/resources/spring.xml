@@ -16,10 +16,9 @@
 
 
 	<bean id="switchTemplate" class="DCDM.SwitchTemplate">
-		<!-- <list> </list> -->
 	</bean>
 
-	<bean id="switchPort" class="DCDM.SwitchPort">
+	<bean id="switchPort" class="DCDM.SwitchPort" scope="prototype">
 
 	</bean>
 <!-- ************* Hibernate **********  -->
