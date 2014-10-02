@@ -32,7 +32,7 @@ public class DCDMtest {
 			switchTemplate.printSwitch();
 
 			switchTemplate = new SwitchTemplate(311,312,311,312,313,314,"here1",34,"unknown");
-			long id3 = addSwitchTemplate(switchTemplate);
+			/*long id3 = */addSwitchTemplate(switchTemplate);
 			addPortToSwitchTemplate(port1, switchTemplate);
 			addPortToSwitchTemplate(port2, switchTemplate);
 			switchTemplate.printSwitch();

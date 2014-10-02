@@ -11,7 +11,6 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import springHibernateDemo.SwitchTemplateDaoImpl;
 import springHibernateDemo.SwitchTemplateService;
-import DCDM.DCDMtest;
 import DCDM.SwitchPort;
 import DCDM.SwitchTemplate;
 
